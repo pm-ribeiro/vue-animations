@@ -4,6 +4,7 @@
       appear
       @before-enter="beforeEnter"
       @enter="enter"
+      @after-enter="afterEnter"
     >
       <h1 v-if="showTitle">About</h1>
     </transition>
@@ -36,11 +37,25 @@
 
   // el represents the dom element its inside the transition
   const beforeEnter =  (el) => {
-    console.log('beforeEnter', el);
+    console.log('beforeEnter - set initial state');
+    el.style.transform = 'translateY(-60px)';
+    el.style.opacity = 0;
   }
 
-  const enter =  (el) => {
-    console.log('enter', el);
+  const enter =  (el, done) => {
+    console.log('starting to enter - make transition');
+    gsap.to(el, {
+      y: 0,
+      opacity: 1,
+      duration: 3,
+      ease: 'bounce.out',
+      onComplete: done
+    })
+  }
+
+  const afterEnter = () => {
+    console.log('after enter', );
+
   }
 
 </script>
